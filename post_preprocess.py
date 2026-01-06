@@ -4,7 +4,6 @@ from langchain_core.prompts import PromptTemplate
 from langchain_core.output_parsers import JsonOutputParser
 from langchain_core.exceptions import OutputParserException
 
-
 def process_posts(raw_file_path, processed_file_path=None, logging=False):
     '''
     Process LinkedIn posts to extract metadata and unify tags.
