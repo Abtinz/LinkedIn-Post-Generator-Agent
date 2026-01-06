@@ -46,7 +46,6 @@ def extract_metadata(post):
         A dictionary containing line_count, language, and tags.
     '''
     
-    
     knowledge_base = '''
     You are given a LinkedIn post. You need to extract number of lines, language of the post and tags.
     1. Return a valid JSON. No preamble. 
@@ -71,7 +70,8 @@ def extract_metadata(post):
     try:
         json_parser = JsonOutputParser()
         response_json = json_parser.parse(response.content)
-    except OutputParserException:
+    except OutputParserException as e:
+        print(f"Error parsing unified tags: {e}")
         raise OutputParserException("Unable to parse jobs due to the context length.")
     return response_json
 
@@ -110,14 +110,15 @@ def get_unified_tags(posts_with_metadata, logging=False):
     chain = prompt_template | llm
     response = chain.invoke(
         input={
-            "tags": str(unique_tags_list)
+                "tags": str(unique_tags_list)
             }
         )
     
     try:
         json_parser = JsonOutputParser()
         json_response = json_parser.parse(response.content)
-    except OutputParserException:
+    except OutputParserException as e:
+        print(f"Error parsing unified tags: {e}")
         raise OutputParserException("Unable to parse jobs due to the context length.")
     return json_response
 
