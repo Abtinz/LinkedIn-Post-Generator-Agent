@@ -1,0 +1,1 @@
+streamlit run /Users/abtinzandi/Documents/projects/LinkedIn-Post-Generator-Agent/application.py
