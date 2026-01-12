@@ -1,5 +1,6 @@
 import streamlit as st
 from few_shot_learning import FewShotPosts
+from post_generator import generate_post
 
 
 length_options = ["Short", "Medium", "Long"]
@@ -15,6 +16,7 @@ def post_generator_frontend():
 
     fs = FewShotPosts()
     tags = fs.get_tags()
+
     with col1:
         selected_tag = st.selectbox("Topic", options=tags)
 
@@ -25,7 +27,10 @@ def post_generator_frontend():
         selected_language = st.selectbox("Language", options=language_options)
 
     if st.button("Generate a new insightful linkedin post"):
-        st.write("Post generation is not implemented yet.")
+        with st.spinner("Generating post..."):
+            post = generate_post(selected_length, selected_language, selected_tag)
+            if post is not None:
+                st.write(post)
 
 
 if __name__ == "__main__":
